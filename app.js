@@ -1,22 +1,35 @@
-const GroceryListItem = (props) => (
+const { useState } = React;
 
-  <li>{props.food}</li>
+const GroceryListItem = (props) => {
+  const [isOver, setIsOver] = useState(false);
+
+  //change style of onHover
+  const style = {
+    fontWeight: isOver ? 'bold' : 'normal'
+  };
+  return (
+  <li style={style} onMouseOver={() => setIsOver(!isOver)}>
+    {props.food}
+  </li>
+  );
+};
+
+
+
+const GroceryList = (props) => (
+    <ul>
+      {props.foods.map((food) => (
+        <GroceryListItem food={food} />
+        ))}
+    </ul>
 );
 
-const GroceryList = () => (
+const MyList = () => (
   <div>
     <h2>My Grocery List</h2>
-    <GroceryListItem foods={['Pizza', 'Pinnapple', 'Ham']} />
+    <GroceryList foods={['Pizza', 'Pinnapple', 'Ham']} />
   </div>
 );
 
-
-// const Chicken = () => (
-//   <li>Chicken</li>
-// );
-// const Bread = () => (
-//   <li>Bread</li>
-// );
-
 //Models
-ReactDOM.render(<GroceryList />, document.querySelector("#app"))
+ReactDOM.render(<MyList />, document.getElementById("app"));
